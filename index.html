@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<title>LINE Pay Login Demo</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+<script type="text/javascript">
+	var getcode = getParameterByName('code');	
+	
+	if (getcode != '') {
+		$.ajax({
+			url: "/ayung/line_login/login.php",
+			type: "POST",
+			data:{'code': getcode},
+			dataType: "json",
+				
+			success: function(userProfile) {
+				alert("Hello! " + userProfile["displayName"]);
+				fillUserProfile(userProfile);
+			},
+			error: function(xhr, ajaxOptions, throwError) {
+				alert(xhr.status);
+				alert(throwError);
+			}
+		});
+	}		
+	
+	function fillUserProfile(profile) {
+		var imageUrl = profile["pictureUrl"];
+		imageUrl += '/small';
+		$("#userImg").attr("src", imageUrl);
+		$("#userID").text("MID: " + profile["mid"]);
+		$("#userNickname").text("暱稱: " + profile["displayName"]);
+		$("#userInfo").show();
+		$("#btn_login").hide();
+		$("#btn_logout").show();
+	}
+	
+	function logout() {
+		$.ajax({
+			url: "/ayung/line_login/logout.php",
+			type: "POST",
+			dataType: "json",
+				
+			success: function(result) {
+				alert("See you!");
+				$("#userInfo").hide();
+				$("#btn_login").show();
+				$("#btn_logout").hide();
+				window.location = "http://www.viktorlin.com/ayung/line_login";
+			},
+			error: function(xhr, ajaxOptions, throwError) {
+				alert(xhr.status);
+				alert(throwError);
+			}
+		});
+		
+	}
+			
+	function getParameterByName(name) {
+    	name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    	var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    	return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	}
+</script>
+
+</head>
+<body>
+<div class="container">
+    <br>
+    <div class="jumbotron">
+        <img alt="Brand" src="https://trial-tw-pay.line.me/img/lp_logo.png">
+        <br>
+        <br>
+        <p>點擊LINE Login按鈕並完成登入，可獲得登入之LINE帳號相關資訊</p>
+        <p>sample code 可至 https://github.com/lptw-tech/line-login 取得</p>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <!-- Nav tabs -->
+            <ul class="nav nav-pills nav-stacked">
+                <input id="btn_login" type="image" name="login" src="https://trial-tw-pay.line.me/img/btn_login_base.png" style="display: block" 
+                onclick="location.href='https://access.line.me/dialog/oauth/weblogin?response_type=code&client_id=1441719742&redirect_uri=http://www.viktorlin.com/ayung/line_login'"/>
+                <button id="btn_logout" onclick="logout()" style="display: none">Logout</button>
+            </ul>
+        </div>
+        
+        <div class="col-lg-9">
+        	<div id="userInfo" class="center-block" style="display: none">
+        		<div class="media" style="background-color: #F0F0F0">
+   					<a class="pull-left">
+      					<img id="userImg" class="media-object img-circle" src="">
+   					</a>
+   					<h4 id="userNickname" class="media-heading" style="font-weight: bold"></h4>
+   					<div id="userID" class="media-body" style="font-weight: bold"></div>
+				</div>
+			</div>
+			</br>
+        </div>
+    </div>
+</div><!-- /.container-fluid -->
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+</body>
+</html>

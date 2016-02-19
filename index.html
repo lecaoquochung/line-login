@@ -30,6 +30,9 @@
 			success: function(userProfile) {
 				alert("Hello! " + userProfile["displayName"]);
 				fillUserProfile(userProfile);
+				$("#userInfo").show();
+				$("#btn_login").hide();
+				$("#btn_logout").show();
 			},
 			error: function(xhr, ajaxOptions, throwError) {
 				alert(xhr.status);
@@ -44,9 +47,6 @@
 		$("#userImg").attr("src", imageUrl);
 		$("#userID").text("MID: " + profile["mid"]);
 		$("#userNickname").text("暱稱: " + profile["displayName"]);
-		$("#userInfo").show();
-		$("#btn_login").hide();
-		$("#btn_logout").show();
 	}
 	
 	function logout() {
@@ -93,9 +93,9 @@
         <div class="col-lg-3">
             <!-- Nav tabs -->
             <ul class="nav nav-pills nav-stacked">
-                <input id="btn_login" type="image" name="login" src="https://trial-tw-pay.line.me/img/btn_login_base.png" style="display: block" 
-                onclick="location.href='https://access.line.me/dialog/oauth/weblogin?response_type=code&client_id=1441719742&redirect_uri=http://www.viktorlin.com/ayung/line_login'"/>
-                <button id="btn_logout" onclick="logout()" style="display: none">Logout</button>
+                <li><input id="btn_login" type="image" name="login" src="https://trial-tw-pay.line.me/img/btn_login_base.png"
+                onclick="location.href='https://access.line.me/dialog/oauth/weblogin?response_type=code&client_id=1441719742&redirect_uri=http://www.viktorlin.com/ayung/line_login'"/></li>
+                <li role="button"><a id="btn_logout" onclick="logout()" style="display: none">Logout</a></li>
             </ul>
         </div>
         

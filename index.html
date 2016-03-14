@@ -22,7 +22,7 @@
 	
 	if (getcode != '') {
 		$.ajax({
-			url: "/ayung/line_login/login.php",
+			url: "/line_login/login.php",
 			type: "POST",
 			data:{'code': getcode},
 			dataType: "json",
@@ -51,7 +51,7 @@
 	
 	function logout() {
 		$.ajax({
-			url: "/ayung/line_login/logout.php",
+			url: "/line_login/logout.php",
 			type: "POST",
 			dataType: "json",
 				
@@ -60,7 +60,7 @@
 				$("#userInfo").hide();
 				$("#btn_login").show();
 				$("#btn_logout").hide();
-				window.location = "http://www.viktorlin.com/ayung/line_login";
+				window.location = "https://trial-tw-pay.line.me/line_login";
 			},
 			error: function(xhr, ajaxOptions, throwError) {
 				alert(xhr.status);
@@ -94,7 +94,7 @@
             <!-- Nav tabs -->
             <ul class="nav nav-pills nav-stacked">
                 <li><input id="btn_login" type="image" name="login" src="https://trial-tw-pay.line.me/img/btn_login_base.png"
-                onclick="location.href='https://access.line.me/dialog/oauth/weblogin?response_type=code&client_id=1441719742&redirect_uri=http://www.viktorlin.com/ayung/line_login'"/></li>
+                onclick="location.href='https://access.line.me/dialog/oauth/weblogin?response_type=code&client_id=1441719742&redirect_uri=https://trial-tw-pay.line.me/line_login'"/></li>
                 <li role="button"><a id="btn_logout" onclick="logout()" style="display: none">Logout</a></li>
             </ul>
         </div>

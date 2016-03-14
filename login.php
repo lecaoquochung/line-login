@@ -13,7 +13,7 @@ if (isset($authcode)) {
 			'client_id'=> "1441719742",
 			'client_secret'=> "565d90464ccd3a1aa5d679ed26e3c6d5",
 			'code'=> $authcode,
-			'redirec_uri'=> 'http://www.viktorlin.com/ayung/line_login' 
+			'redirec_uri'=> 'https://trial-tw-pay.line.me/line_login' 
 			);
 	
 	$userToken = get_token($info); // send infomation to get access token
